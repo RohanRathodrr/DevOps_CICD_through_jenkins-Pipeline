@@ -20,11 +20,15 @@ pipeline {
         stage('Push image to Hub'){
             steps{
                 script{
-                   withCredentials([string(credentialsId: 'dockerhub-pwd', variable: 'dockerhubpwd')]) {
-                   sh 'docker login -u rohanrathodrr -p ${dockerhubpwd}'
-
-}
-                   sh 'docker push rohanrathod/devops-integration'
+                withCredentials([usernamePassword(
+                    credentialsId: 'dockerhub-pwd',
+                    usernameVariable: 'DOCKER_USER',
+                    passwordVariable: 'DOCKER_PASS'
+                )]) {
+                    sh '''
+                        echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
+                        docker push rohanrathod/devops-integration
+                    '''
                 }
             }
         }
