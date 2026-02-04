@@ -16,7 +16,7 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                sh 'docker buildx build -t rohanrathod/devops-integration .'
+                sh 'docker buildx build -t rohanrathodrr/devops-integration .'
             }
         }
 
@@ -29,7 +29,7 @@ pipeline {
                 )]) {
                     sh '''
                         echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
-                        docker push rohanrathod/devops-integration
+                        docker push rohanrathodrr/devops-integration
                     '''
                 }
             }
